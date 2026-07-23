@@ -1,110 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ROI Calculator — Return on Investment | Tabutility</title>
-  <meta name="description" content="Calculate return on investment (ROI), annualised return, and profit/loss for any investment. Simple and detailed ROI analysis." />
-  <meta name="keywords" content="roi calculator, return on investment, investment return, annualised return, profit calculator" />
-  <link rel="canonical" href="https://roi.tabutility.com/" />
-  <meta property="og:title" content="ROI Calculator — Return on Investment" />
-  <meta property="og:description" content="Calculate ROI, annualised return and profit for any investment instantly." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>" />
-  <meta name="robots" content="index, follow" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7039091592734005" crossorigin="anonymous"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-78VZWJ5B1W"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-78VZWJ5B1W');</script>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sleep Calculator — Best Bedtime & Wake-up Times — Tabutility</title>
+<meta name="description" content="Free sleep calculator. Find the best times to sleep or wake up based on 90-minute sleep cycles. Wake up feeling refreshed every time."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-78VZWJ5B1W"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-78VZWJ5B1W');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7039091592734005" crossorigin="anonymous"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh}
+nav{background:#1e293b;border-bottom:1px solid #334155;padding:14px 24px;display:flex;align-items:center;gap:16px}
+nav a{color:#94a3b8;text-decoration:none;font-size:14px}nav a:hover{color:#f1f5f9}
+nav .brand{color:#38bdf8;font-weight:700;font-size:18px}
+.ad-banner{background:#1e293b;border-bottom:1px solid #334155;padding:8px;text-align:center}
+#app{max-width:540px;margin:36px auto;padding:0 20px 40px}
+h1{font-size:26px;font-weight:700;text-align:center;margin-bottom:6px}
+.subtitle{text-align:center;color:#94a3b8;margin-bottom:24px;font-size:14px}
+.tabs{display:flex;gap:4px;background:#1e293b;border-radius:12px;padding:4px;margin-bottom:20px;border:1px solid #334155}
+.tab{flex:1;border:none;border-radius:9px;padding:10px;font-size:14px;font-weight:600;cursor:pointer;background:none;color:#64748b;transition:all .15s}
+.tab.active{background:#8b5cf6;color:#fff}
+.card{background:#1e293b;border-radius:18px;padding:22px;border:1px solid #334155;margin-bottom:14px}
+label{display:block;font-size:13px;color:#94a3b8;margin-bottom:6px}
+input[type=time]{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:10px;padding:12px 14px;font-size:18px;color-scheme:dark}
+.now-btn{width:100%;margin-top:8px;background:#334155;color:#94a3b8;border:none;border-radius:8px;padding:8px;font-size:13px;cursor:pointer}
+.sleep-onset{display:flex;align-items:center;gap:10px;margin-top:14px}
+.sleep-onset label{margin:0;white-space:nowrap}
+input[type=range]{flex:1;accent-color:#8b5cf6}
+.results-header{font-size:13px;color:#64748b;margin-bottom:14px}
+.times-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.time-card{background:#0f172a;border-radius:14px;padding:16px;text-align:center;border:1px solid #1e293b;position:relative}
+.time-card.best{border-color:#8b5cf6;background:#1a0f2e}
+.best-badge{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:#8b5cf6;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap}
+.t-time{font-family:monospace;font-size:28px;font-weight:700;color:#f1f5f9}
+.t-cycles{font-size:13px;color:#8b5cf6;font-weight:600;margin-top:4px}
+.t-hrs{font-size:12px;color:#64748b;margin-top:2px}
+.tip-box{background:#1a0f2e;border:1px solid #4c1d95;border-radius:14px;padding:16px;font-size:13px;color:#c4b5fd;line-height:1.6}
+</style>
 </head>
-<body style="margin:0;background:#f8faff;font-family:'Segoe UI',Arial,sans-serif">
-<div id="root"></div>
-<script type="text/babel">
-//<![CDATA[
-const { useState } = React;
-function fmt(n){return '$'+Math.abs(Math.round(n)).toLocaleString();}
-function fmtPct(n){return (n>=0?'+':'')+n.toFixed(2)+'%';}
-
-function App() {
-  const [initial, setInitial] = useState(10000);
-  const [final, setFinal] = useState(14500);
-  const [years, setYears] = useState(3);
-  const [fees, setFees] = useState(0);
-
-  const inv = Number(initial)||0;
-  const fin = Number(final)||0;
-  const yrs = Number(years)||1;
-  const fee = Number(fees)||0;
-
-  const netFinal = fin - fee;
-  const profit = netFinal - inv;
-  const roi = inv > 0 ? (profit / inv * 100) : 0;
-  const annualised = inv > 0 && yrs > 0 ? (Math.pow(netFinal/inv, 1/yrs)-1)*100 : 0;
-  const positive = profit >= 0;
-
-  return (
-    <div style={{maxWidth:520,margin:'0 auto',paddingBottom:40}}>
-      <div style={{background:'#1a1a2e',padding:'12px 20px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-        <a href="https://tabutility.com" style={{color:'#a5b4fc',textDecoration:'none',fontSize:14}}>← All Tools</a>
-        <span style={{color:'#fff',fontWeight:700,fontSize:15}}>⚡ Tabutility</span>
-      </div>
-      <div style={{background:'linear-gradient(135deg,#0891b2,#0e7490)',padding:'28px 20px',textAlign:'center',color:'#fff'}}>
-        <div style={{fontSize:36,marginBottom:8}}>📈</div>
-        <h1 style={{margin:'0 0 6px',fontSize:22,fontWeight:900}}>ROI Calculator</h1>
-        <p style={{margin:0,fontSize:13,opacity:0.85}}>Return on investment · annualised return · profit/loss</p>
-      </div>
-      <div style={{padding:20}}>
-        <div style={{background:'#fff',borderRadius:14,padding:20,boxShadow:'0 2px 12px rgba(0,0,0,0.06)',marginBottom:16}}>
-          {[['Initial Investment','$',initial,setInitial],['Final Value','$',final,setFinal],['Fees / Costs','$',fees,setFees]].map(([label,prefix,val,setter])=>(
-            <div key={label} style={{marginBottom:14}}>
-              <label style={{fontSize:13,fontWeight:600,color:'#374151',display:'block',marginBottom:6}}>{label}</label>
-              <div style={{position:'relative'}}>
-                <span style={{position:'absolute',left:12,top:'50%',transform:'translateY(-50%)',color:'#6b7280'}}>{prefix}</span>
-                <input type="number" value={val} onChange={e=>setter(e.target.value)}
-                  style={{width:'100%',padding:'11px 12px 11px 28px',borderRadius:10,border:'2px solid #e5e7eb',fontSize:16,boxSizing:'border-box'}} />
-              </div>
-            </div>
-          ))}
-          <div>
-            <label style={{fontSize:13,fontWeight:600,color:'#374151',display:'block',marginBottom:6}}>Investment Period (years)</label>
-            <input type="number" value={years} onChange={e=>setYears(e.target.value)} min={0.1} step={0.5}
-              style={{width:'100%',padding:'11px 12px',borderRadius:10,border:'2px solid #e5e7eb',fontSize:16,boxSizing:'border-box'}} />
-          </div>
-        </div>
-
-        <div style={{background: positive?'#f0fdf4':'#fef2f2',borderRadius:14,padding:24,textAlign:'center',marginBottom:16,boxShadow:'0 2px 12px rgba(0,0,0,0.06)'}}>
-          <div style={{fontSize:13,fontWeight:600,color:'#6b7280',marginBottom:4}}>TOTAL ROI</div>
-          <div style={{fontSize:52,fontWeight:900,color: positive?'#059669':'#dc2626'}}>{fmtPct(roi)}</div>
-          <div style={{fontSize:15,color: positive?'#059669':'#dc2626',fontWeight:700}}>{positive?'+':''}{fmt(profit)} {positive?'profit':'loss'}</div>
-        </div>
-
-        <div style={{background:'#fff',borderRadius:14,padding:20,boxShadow:'0 2px 12px rgba(0,0,0,0.06)'}}>
-          {[
-            ['Initial Investment', fmt(inv)],
-            ['Final Value (before fees)', fmt(fin)],
-            ['Fees / Transaction Costs', fee > 0 ? '-'+fmt(fee) : '$0'],
-            ['Net Final Value', fmt(netFinal)],
-            ['Net Profit / Loss', (positive?'+':'-')+fmt(profit)],
-            ['Total ROI', fmtPct(roi)],
-            ['Annualised Return (CAGR)', fmtPct(annualised)+' / yr'],
-          ].map(([l,v])=>(
-            <div key={l} style={{display:'flex',justifyContent:'space-between',padding:'9px 0',borderBottom:'1px solid #f0f0f0',fontSize:14}}>
-              <span style={{color:'#6b7280'}}>{l}</span>
-              <strong style={{color: l.includes('Loss')||l.includes('Fees')&&fee>0?'#dc2626':l.includes('ROI')||l.includes('Profit')||l.includes('CAGR')?positive?'#059669':'#dc2626':'#1a1a2e'}}>{v}</strong>
-            </div>
-          ))}
-        </div>
-        <div style={{background:'#ecfeff',borderRadius:12,padding:16,marginTop:16,fontSize:13,color:'#0e7490',lineHeight:1.6}}>
-          <strong>CAGR</strong> (Compound Annual Growth Rate) is the annualised ROI — useful when comparing investments held for different time periods.
-        </div>
-      </div>
+<body>
+<nav><span class="brand">⚡ Tabutility</span><a href="https://tabutility.com">← All Tools</a></nav>
+<div class="ad-banner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7039091592734005" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+<div id="app">
+  <h1>Sleep Calculator</h1>
+  <p class="subtitle">Wake up refreshed by sleeping through complete 90-minute cycles</p>
+  <div class="tabs">
+    <button class="tab active" onclick="setMode('wake')">I want to wake up at…</button>
+    <button class="tab" onclick="setMode('sleep')">I'm going to sleep at…</button>
+  </div>
+  <div class="card">
+    <label id="time-label">Wake-up time</label>
+    <input type="time" id="time-inp" oninput="calc()"/>
+    <button class="now-btn" onclick="setNow()">Use current time</button>
+    <div class="sleep-onset">
+      <label>Fall-asleep time:</label>
+      <input type="range" id="onset" min="5" max="30" value="14" oninput="updateOnset();calc()"/>
+      <span id="onset-val" style="font-size:13px;color:#8b5cf6;min-width:50px">14 min</span>
     </div>
-  );
+  </div>
+  <div id="results-section" style="display:none">
+    <div class="results-header" id="results-header"></div>
+    <div class="times-grid" id="times-grid"></div>
+    <div style="height:14px"></div>
+    <div class="tip-box">
+      💡 <strong>Sleep cycles last ~90 minutes.</strong> Waking at the end of a cycle means you finish in light sleep — easier to rise and feel alert. Try to aim for 5 or 6 cycles (7.5 or 9 hours).
+    </div>
+  </div>
+</div>
+<script>
+var mode = 'wake';
+function setMode(m){
+  mode=m;
+  document.querySelectorAll('.tab').forEach(function(b,i){ b.className='tab'+(i===(m==='wake'?0:1)?' active':''); });
+  document.getElementById('time-label').textContent=m==='wake'?'Wake-up time':'Bedtime';
+  calc();
 }
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-//]]>
+function setNow(){
+  var now=new Date();
+  var h=String(now.getHours()).padStart(2,'0');
+  var m=String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('time-inp').value=h+':'+m;
+  calc();
+}
+function updateOnset(){
+  var v=document.getElementById('onset').value;
+  document.getElementById('onset-val').textContent=v+' min';
+}
+function pad2(n){ return String(n).padStart(2,'0'); }
+function fmtTime(totalMins){
+  var h=Math.floor(((totalMins%1440)+1440)%1440/60);
+  var m=Math.floor(((totalMins%1440)+1440)%1440%60);
+  var ampm=h>=12?'PM':'AM';
+  var h12=h%12||12;
+  return h12+':'+pad2(m)+' '+ampm;
+}
+function calc(){
+  var val=document.getElementById('time-inp').value;
+  if(!val){ document.getElementById('results-section').style.display='none'; return; }
+  var parts=val.split(':');
+  var refMins=parseInt(parts[0])*60+parseInt(parts[1]);
+  var onset=parseInt(document.getElementById('onset').value);
+  var CYCLE=90;
+  var times=[];
+  // Show 6 cycle options (3 to 8 cycles)
+  for(var c=6;c>=1;c--){
+    var sleepMins,wakeMins,label;
+    if(mode==='wake'){
+      // Given wake time, find when to sleep
+      sleepMins=refMins-c*CYCLE-onset;
+      wakeMins=refMins;
+      label=fmtTime(sleepMins);
+      times.push({sleep:fmtTime(sleepMins),wake:fmtTime(wakeMins),cycles:c,hrs:+(c*1.5).toFixed(1)});
+    } else {
+      // Given sleep time, find when to wake
+      sleepMins=refMins;
+      wakeMins=refMins+onset+c*CYCLE;
+      times.push({sleep:fmtTime(sleepMins),wake:fmtTime(wakeMins),cycles:c,hrs:+(c*1.5).toFixed(1)});
+    }
+  }
+  document.getElementById('results-section').style.display='block';
+  document.getElementById('results-header').textContent=
+    mode==='wake'
+      ? 'Go to sleep at one of these times to wake at '+fmtTime(refMins)+':'
+      : 'Set your alarm for one of these times if you sleep at '+fmtTime(refMins)+':';
+  var grid=document.getElementById('times-grid'); grid.innerHTML='';
+  times.forEach(function(t,i){
+    var best=t.cycles===5||t.cycles===6;
+    var card=document.createElement('div');
+    card.className='time-card'+(best?' best':'');
+    card.innerHTML=(best?'<div class="best-badge">✨ Recommended</div>':'')+
+      '<div class="t-time">'+(mode==='wake'?t.sleep:t.wake)+'</div>'+
+      '<div class="t-cycles">'+t.cycles+' cycles</div>'+
+      '<div class="t-hrs">'+t.hrs+' hours sleep</div>';
+    grid.appendChild(card);
+  });
+}
+updateOnset();
 </script>
 </body>
 </html>
