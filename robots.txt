@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+
 Sitemap: https://sleep-calculator.tabutility.com/sitemap.xml
